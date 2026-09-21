@@ -1,70 +1,77 @@
 
-
-
-//In this problem you have to read an integer value and calculate the smallest possible number of banknotes in which the value may be decomposed.
-//The possible banknotes are 100, 50, 20, 10, 5, 2 and 1. Print the read value and the list of banknotes.
-
-//Input
-//The input file contains an integer value N (0 < N < 1000000).
-
-//Output
-//Print the read number and the minimum quantity of each necessary banknotes in Portuguese language, as the given example.
-//Do not forget to print the end of line after each line, otherwise you will receive “Presentation Error”.//
-
-
 #include <stdio.h>
+#include <string.h>
 
 int main() {
+    char input[100];
+    long long taka;
+    int paisa;
 
-        double N;
+    printf("Enter amount: ");
+    scanf("%99s", input);
 
-        scanf("%lf",&N);
+    char *point = strchr(input, '.');
 
-        int C= (int) (N * 100 + 0.5);
+    if (point != NULL) {
+        *point = '\0';
 
-        printf("NOTAS:\n");
+        sscanf(input, "%lld", &taka);
 
-        printf("%d nota(s) de R$ 100.00\n", C/10000);
-        C = C % 10000;
+        point++;
 
-         printf("%d nota(s) de R$ 50.00\n",C /5000);
-         C = C % 5000;
+        if (point[0] >= '0' && point[0] <= '9')
+            paisa = (point[0] - '0') * 10;
+        else
+            paisa = 0;
 
+        if (point[1] >= '0' && point[1] <= '9')
+            paisa += point[1] - '0';
+    }
+    else {
+        sscanf(input, "%lld", &taka);
+        paisa = 0;
+    }
 
-         printf("%d nota(s) de R$ 20.00\n",C /2000);
-        C = C % 2000;
+    long long cents = taka * 100 + paisa;
 
-         printf("%d nota(s) de R$ 10.00\n",C /1000);
-        C = C % 1000;
+    printf("\nNOTES:\n");
 
-         printf("%d nota(s) de R$ 5.00\n",C /500);
-        C = C % 500;
+    printf("%lld note(s) of 100.00\n", cents / 10000);
+    cents = cents % 10000;
 
-         printf("%d nota(s) de R$ 2.00\n",C /200);
-        C = C % 200;
+    printf("%lld note(s) of 50.00\n", cents / 5000);
+    cents = cents % 5000;
 
+    printf("%lld note(s) of 20.00\n", cents / 2000);
+    cents = cents % 2000;
 
+    printf("%lld note(s) of 10.00\n", cents / 1000);
+    cents = cents % 1000;
 
-         printf("MOEDAS: \n");
+    printf("%lld note(s) of 5.00\n", cents / 500);
+    cents = cents % 500;
 
-        printf("%d nota(s) de R$ 1.00\n", C/100);
-        C = C % 100;
+    printf("%lld note(s) of 2.00\n", cents / 200);
+    cents = cents % 200;
 
-         printf("%d nota(s) de R$ 0.50\n",C /50);
-         C = C % 50;
+    printf("COINS:\n");
 
+    printf("%lld coin(s) of 1.00\n", cents / 100);
+    cents = cents % 100;
 
-         printf("%d nota(s) de R$ 0.25\n",C /25);
-        C = C % 25;
+    printf("%lld coin(s) of 0.50\n", cents / 50);
+    cents = cents % 50;
 
-         printf("%d nota(s) de R$ 0.01\n",C /10);
-        C = C % 10;
+    printf("%lld coin(s) of 0.25\n", cents / 25);
+    cents = cents % 25;
 
-         printf("%d nota(s) de R$ 0.05\n",C /5);
-        C = C % 5;
+    printf("%lld coin(s) of 0.10\n", cents / 10);
+    cents = cents % 10;
 
-         printf("%d nota(s) de R$ 0.01\n",C /1);
+    printf("%lld coin(s) of 0.05\n", cents / 5);
+    cents = cents % 5;
 
+    printf("%lld coin(s) of 0.01\n", cents);
 
     return 0;
 }
